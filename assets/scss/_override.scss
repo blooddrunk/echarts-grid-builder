@@ -1,0 +1,9 @@
+.el-loading-spinner {
+  svg {
+    display: inline-block;
+  }
+}
+
+.el-popover__title {
+  @apply tw-text-sm tw-text-medium #{!important};
+}
