@@ -18,6 +18,8 @@ import {
   faSave,
   faTable,
   faArrowRight,
+  faDownload,
+  faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 dom.watch();
@@ -33,7 +35,9 @@ library.add(
   faChartArea,
   faSave,
   faTable,
-  faArrowRight
+  faArrowRight,
+  faDownload,
+  faPen
 );
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);

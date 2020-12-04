@@ -73,8 +73,6 @@ export default {
   },
 
   created() {
-    console.log(this.currentChartId);
-
     // fill in default option
     // preset data should already be populated at this time
     this.updateChartConfigById({
@@ -98,7 +96,6 @@ export default {
       this.$watch(
         () => this.chartDataMap[this.currentChartId],
         function () {
-          console.log('data', this.currentChartId);
           this.updateCurrentChartOptions();
         },
         {
@@ -107,7 +104,7 @@ export default {
       );
 
       this.$watch(
-        `chartConfigMap.${this.currentChartId}`,
+        () => this.chartConfigMap[this.currentChartId],
         function () {
           this.updateCurrentChartOptions();
         },

@@ -4,6 +4,11 @@ Gitlab REPO: [http://git.komect.net/DPYY/X-CHARTS](http://git.komect.net/DPYY/X-
 
 POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.gitee.io/echarts-grid-builder)
 
+图表配置可参考
+
+- [图说](https://tushuo.baidu.com/)
+- [ChartCube](https://chartcube.alipay.com/)
+
 ## 主要功能
 
 - 背景/画布设置 ⭐⭐⭐
@@ -77,3 +82,14 @@ POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.g
   > ??? 将数据保存在服务端
 
 - 整个画布可保存为 pdf/图片
+
+## 开发分工
+
+按功能耦合和工作量，简单分为以下几组
+
+- 画布/主题
+- 数据处理，导入/导出
+- 图表基本配置，实际上通用的基本配置不多，但应为高级配置提供可复用的逻辑基础
+- 有坐标轴的图表（折线/条形/散点）
+- 无坐标轴的图表（饼图/仪表盘)
+- 复合，如双 Y 轴，折线图+柱状图，地图+散点图，**单一种类 series 的图表开发时须为这些情况考虑**

@@ -7,3 +7,7 @@
 .el-popover__title {
   @apply tw-text-sm tw-text-medium #{!important};
 }
+
+.htContextMenu.handsontable {
+  z-index: 9999 !important;
+}

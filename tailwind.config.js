@@ -25,7 +25,7 @@ module.exports = {
       },
 
       backgroundColor: (theme) => ({
-        main: theme('colors.gray.200'),
+        main: theme('colors.gray.100'),
       }),
 
       boxShadow: (theme) => ({

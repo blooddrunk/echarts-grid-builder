@@ -98,9 +98,16 @@ export default {
       this.localLayout.push(newItem);
     },
 
-    removeGridItem(id) {
-      this.localLayout = this.localLayout.filter((layout) => layout.i !== id);
-      this.removeCanvasItemById(id);
+    async removeGridItem(id) {
+      try {
+        await this.$confirm('您确认要删除吗？一旦删除，不可恢复。', '提示', {
+          type: 'warning',
+        });
+        this.localLayout = this.localLayout.filter((layout) => layout.i !== id);
+        this.removeCanvasItemById(id);
+      } catch {
+        // cancelled
+      }
     },
 
     handleLayoutChange(newLayout) {

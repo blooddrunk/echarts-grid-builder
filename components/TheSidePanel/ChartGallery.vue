@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-alert type="info" show-icon :closable="false">
-      TODO: 拖拽
+      双击或拖拽添加到画布
 
-      <template #title>双击添加到画布</template>
+      <template #title>Tips</template>
     </el-alert>
 
     <el-collapse v-model="activeNames">
@@ -31,12 +31,6 @@
         </ul>
       </el-collapse-item>
     </el-collapse>
-
-    <!-- <div class="tw-w-full tw-absolute tw-bottom-0 tw-right-0 tw-flex">
-      <el-button class="tw-w-full tw-rounded-none" type="primary" :disabled="!selectedThumbnail">
-        确定并编辑
-      </el-button>
-    </div> -->
   </div>
 </template>
 

@@ -1,12 +1,12 @@
 <template>
-  <el-dialog :visible.sync="visible">
+  <el-dialog :visible.sync="visible" append-to-body>
     <template #title>
       <FontAwesomeIcon icon="table"></FontAwesomeIcon>
       数据编辑
     </template>
 
-    <div v-loading="xlsxLoading">
-      <div v-if="XLSX" :class="$style.data">
+    <div v-loading="depLoading" class="tw-p-3">
+      <div v-if="XLSX">
         <div class="tw-text-center">
           <el-upload
             drag
@@ -24,27 +24,26 @@
           </el-upload>
         </div>
 
-        <HotTable
-          ref="hotTable"
-          class="tw-mt-6"
-          :data="xlsxData"
-          license-key="non-commercial-and-evaluation"
-          :row-headers="true"
-          :col-headers="true"
-          :fixed-columns-left="1"
-          :fixed-rows-top="1"
-          context-menu
-          height="400px"
-          :after-change="handleDataChange"
-        >
-        </HotTable>
+        <HotTable ref="hotTable" class="tw-mt-6" :settings="hotSettings"> </HotTable>
       </div>
     </div>
 
     <template #footer>
       <el-button @click="onDialogClose">取消</el-button>
 
-      <el-button type="primary" @click="handleDataCommit"> 更新数据 </el-button>
+      <el-button type="primary" :disabled="depLoading" :loading="depLoading" @click="handleExport">
+        <FontAwesomeIcon icon="download"></FontAwesomeIcon>
+        导出
+      </el-button>
+      <el-button
+        type="primary"
+        :disabled="depLoading"
+        :loading="depLoading"
+        @click="handleDataCommit"
+      >
+        <FontAwesomeIcon icon="pen"></FontAwesomeIcon>
+        更新
+      </el-button>
     </template>
   </el-dialog>
 </template>
@@ -93,7 +92,7 @@ export default {
 
   data: () => ({
     XLSX: null,
-    xlsxLoading: false,
+    depLoading: false,
     xlsxData: [],
     hotTable: null,
   }),
@@ -101,6 +100,29 @@ export default {
   computed: {
     ...mapState('chart', ['currentEditingChart']),
     ...mapGetters('chart', ['currentChartData']),
+
+    hotSettings() {
+      return {
+        data: this.xlsxData,
+        licenseKey: 'non-commercial-and-evaluation',
+        language: 'zh-CN',
+        height: '45vh',
+        width: '100%',
+        rowHeaders: true,
+        colHeaders: true,
+        contextMenu: true,
+        fixedColumnsLeft: 1,
+        fixedRowsTop: 1,
+        manualColumnResize: true,
+        manualRowResize: true,
+        afterChange: this.handleDataChange,
+        columns: (index) => {
+          return {
+            type: index > 0 ? 'numeric' : 'text',
+          };
+        },
+      };
+    },
   },
 
   watch: {
@@ -116,7 +138,7 @@ export default {
   },
 
   async mounted() {
-    this.XLSX = await this.loadXLSX();
+    await this.loadDependencies();
   },
 
   methods: {
@@ -132,14 +154,20 @@ export default {
       this.xlsxData = data;
     },
 
-    async loadXLSX() {
-      this.xlsxLoading = true;
+    async loadDependencies() {
+      this.depLoading = true;
       try {
-        const XLSX = await import('xlsx');
-        this.xlsxLoading = false;
-        return XLSX.default;
+        await Promise.all([
+          (async () => {
+            const XLSX = await import('xlsx');
+            this.XLSX = XLSX.default;
+          })(),
+          import('handsontable/languages/zh-CN'),
+        ]);
+
+        this.depLoading = false;
       } catch (error) {
-        this.xlsxLoading = false;
+        this.depLoading = false;
         console.log(this.$message.error('数据初始化失败'));
       }
     },
@@ -154,11 +182,18 @@ export default {
       this.onDataCommit();
       this.onDialogClose();
     },
+
+    handleExport() {
+      try {
+        const ws = this.XLSX.utils.aoa_to_sheet(this.xlsxData);
+        const wb = this.XLSX.utils.book_new();
+        this.XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        this.XLSX.writeFile(wb, 'out.xlsx');
+      } catch (error) {
+        console.error(error);
+        this.$message.error('无法导出数据');
+      }
+    },
   },
 };
 </script>
-
-<style lang="scss" module>
-.data {
-}
-</style>
