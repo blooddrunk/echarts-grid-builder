@@ -168,7 +168,7 @@ export default {
         this.depLoading = false;
       } catch (error) {
         this.depLoading = false;
-        console.log(this.$message.error('数据初始化失败'));
+        this.$message.error('数据初始化失败');
       }
     },
 

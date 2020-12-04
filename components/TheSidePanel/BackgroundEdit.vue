@@ -1,9 +1,9 @@
 <template>
   <el-form size="mini" label-width="80px" @submit.native.prevent="handleConfigChange">
     <el-alert type="info" show-icon :closable="false">
-      TODO: 动态计算行高
+      图表大小和比例在全屏下可能不一样
 
-      <template #title>图表大小和比例在全屏下可能不一样</template>
+      <template #title>提示</template>
     </el-alert>
 
     <el-collapse v-model="activeSectionNames">
@@ -155,6 +155,11 @@ export default {
     },
   },
 
+  created() {
+    // commit auto-calculated line height to vuex
+    this.handleConfigChange();
+  },
+
   methods: {
     ...mapMutations('ui', ['resetBackground']),
     ...mapMutations('chart', ['setCanvasConfig']),
@@ -168,14 +173,15 @@ export default {
       const rowHeight = this.caculateRowHeightFromRowNum(val);
       if (isNumeric(rowHeight)) {
         this.formData.grid.rowHeight = rowHeight;
+        return true;
       } else {
         this.$message.error('行高计算失败，请检查');
+        return false;
       }
     },
 
     handleConfigChange() {
       this.setCanvasConfig(cloneDeep(this.formData));
-      this.$message.success('配置更新成功');
     },
 
     handleReset() {

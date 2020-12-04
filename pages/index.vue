@@ -150,7 +150,6 @@ export default {
       if (dragItemIndex > -1) {
         // get grid item
         const gridItem = grid.$children[dragItemIndex];
-        console.log(gridItem);
         gridItem.dragging = {
           top: this.mousePos.y - canvasRect.top,
           left: this.mousePos.x - canvasRect.left,
