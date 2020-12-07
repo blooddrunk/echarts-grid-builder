@@ -22,9 +22,9 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
+import ChartEdit from './ChartEdit';
 import BackgroundEdit from './BackgroundEdit';
 import ChartGallery from './ChartGallery';
-import ChartEdit from './ChartEdit';
 
 export default {
   name: 'TheSidePanel',

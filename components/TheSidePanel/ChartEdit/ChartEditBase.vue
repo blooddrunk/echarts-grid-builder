@@ -8,14 +8,20 @@
       </el-button>
     </div>
 
-    <el-form size="mini" label-width="80px">
-      <el-form-item label="标题">
-        <el-input v-model="formData.title.text"></el-input>
-      </el-form-item>
+    <el-form size="mini" label-width="110px">
+      <CollapsedEditItem v-model="formData.title.show" has-toggle title="标题">
+        <el-form-item label="主标题">
+          <el-input v-model="formData.title.text"></el-input>
+        </el-form-item>
 
-      <el-form-item label="副标题">
-        <el-input v-model="formData.title.subtext"></el-input>
-      </el-form-item>
+        <el-form-item>
+          <template #label>
+            <TogglableLabel :default-value="false">副标题</TogglableLabel>
+          </template>
+
+          <el-input v-model="formData.title.subtext"></el-input>
+        </el-form-item>
+      </CollapsedEditItem>
     </el-form>
 
     <DataEditDialog
@@ -28,20 +34,27 @@
 
 <script>
 import cloneDeep from 'lodash/cloneDeep';
+// import getIn from 'lodash/get';
 
+import { mergeData } from '@/mixins/helpers';
 import withForm from '@/mixins/withForm';
-import DataEditDialog from '@/components/TheSidePanel/DataEditDialog';
+import DataEditDialog from './DataEditDialog';
+import TogglableLabel from './TogglableLabel';
+import CollapsedEditItem from './CollapsedEditItem';
 
 export default {
   name: 'ChartEditBase',
 
   components: {
     DataEditDialog,
+    TogglableLabel,
+    CollapsedEditItem,
   },
 
   mixins: [
     withForm({
       title: {
+        show: true,
         text: '',
         subtext: '',
       },
@@ -72,7 +85,19 @@ export default {
 
   data: () => ({
     dataEditDialogVisible: false,
+
+    formState: {
+      title: {
+        subtext: false,
+      },
+    },
   }),
+
+  beforeCreate() {
+    mergeData(this, (data) => ({
+      formState: cloneDeep(data.form.data),
+    }));
+  },
 
   created() {
     this.initFormData();
@@ -99,6 +124,12 @@ export default {
         }
       });
     },
+
+    // handleFieldSwitch(fieldPath, on) {
+    //   if(on) {
+
+    //   }
+    // },
   },
 };
 </script>
