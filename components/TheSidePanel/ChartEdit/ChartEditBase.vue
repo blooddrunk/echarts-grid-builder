@@ -16,11 +16,21 @@
 
         <el-form-item>
           <template #label>
-            <TogglableLabel :default-value="false">副标题</TogglableLabel>
+            <TogglableLabel
+              :default-value="false"
+              :on-switch="(val) => handleFieldSwitch('title.subtext', val)"
+            >
+              副标题
+            </TogglableLabel>
           </template>
 
-          <el-input v-model="formData.title.subtext"></el-input>
+          <el-input v-model="formData.title.subtext" :disabled="formState.title.subtext"></el-input>
         </el-form-item>
+
+        <PositionSelector
+          :avail-position="['top', 'bottom']"
+          @change="handleTitlePosChange"
+        ></PositionSelector>
       </CollapsedEditItem>
     </el-form>
 
@@ -34,13 +44,13 @@
 
 <script>
 import cloneDeep from 'lodash/cloneDeep';
-// import getIn from 'lodash/get';
 
-import { mergeData } from '@/mixins/helpers';
+import { deepSet } from '@/utils/misc';
 import withForm from '@/mixins/withForm';
 import DataEditDialog from './DataEditDialog';
 import TogglableLabel from './TogglableLabel';
 import CollapsedEditItem from './CollapsedEditItem';
+import PositionSelector from './PositionSelector';
 
 export default {
   name: 'ChartEditBase',
@@ -49,6 +59,7 @@ export default {
     DataEditDialog,
     TogglableLabel,
     CollapsedEditItem,
+    PositionSelector,
   },
 
   mixins: [
@@ -93,12 +104,6 @@ export default {
     },
   }),
 
-  beforeCreate() {
-    mergeData(this, (data) => ({
-      formState: cloneDeep(data.form.data),
-    }));
-  },
-
   created() {
     this.initFormData();
 
@@ -125,11 +130,22 @@ export default {
       });
     },
 
-    // handleFieldSwitch(fieldPath, on) {
-    //   if(on) {
+    handleTitlePosChange(config) {
+      this.formData.title = {
+        ...this.formData.title,
+        ...config,
+      };
+    },
 
-    //   }
-    // },
+    handleFieldSwitch(fieldPath, on, defaultValue = '') {
+      const path = fieldPath.split('.');
+
+      deepSet(this.formState, path, !on, this.$set);
+
+      if (!on) {
+        deepSet(this.formData, path, defaultValue);
+      }
+    },
   },
 };
 </script>

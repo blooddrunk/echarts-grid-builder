@@ -253,10 +253,6 @@ export const getDefaultChartOptions = (...option) => {
       tooltip: {},
       xAxis: { type: 'category' },
       yAxis: {},
-      title: {
-        left: 5,
-        top: 5,
-      },
     },
     ...option
   );

@@ -55,7 +55,7 @@ export default {
 <style lang="scss" module>
 .panel {
   @apply tw-relative tw-h-full tw-pb-4;
-  @apply tw-flex-shrink-0 tw-flex tw-flex-col tw-w-84;
+  @apply tw-flex-shrink-0 tw-flex tw-flex-col tw-w-88;
   @apply tw-border-l-thin tw-border-light;
 
   :global {
