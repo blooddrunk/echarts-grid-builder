@@ -59,6 +59,10 @@ export default {
   @apply tw-border-l-thin tw-border-light;
 
   :global {
+    .el-collapse {
+      @apply tw-border-t-0;
+    }
+
     .el-collapse-item__header {
       @apply tw-px-3;
       @apply tw-font-semibold tw-text-base tw-text-medium;
@@ -69,7 +73,11 @@ export default {
     }
 
     .el-collapse-item__content {
-      @apply tw-py-3 tw-px-4 tw-bg-main;
+      @apply tw-pl-0 tw-pr-4 tw-py-6 tw-bg-main;
+
+      .el-form-item:last-child {
+        @apply tw-mb-0;
+      }
     }
 
     .el-form-item {

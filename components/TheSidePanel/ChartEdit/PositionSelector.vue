@@ -30,7 +30,7 @@ export default {
   props: {
     availPosition: {
       type: Array,
-      default: () => ['top', 'right', 'bottom', 'left'],
+      default: () => ['top', 'bottom'],
     },
 
     defaultPosition: {
@@ -45,7 +45,7 @@ export default {
     },
 
     defaultAlignment: {
-      type: Array,
+      type: [Array, String],
       default: () => ['center', 'middle'],
     },
   },
@@ -90,8 +90,9 @@ export default {
   },
 
   watch: {
-    position(val) {
+    position(val, oldVal) {
       this.alignment = this.getDefaultAlignmentByPosition(val);
+      this.handleConfigChange();
     },
 
     alignment() {
@@ -111,7 +112,10 @@ export default {
     },
 
     getDefaultAlignmentByPosition(position) {
-      const [x, y] = this.defaultAlignment;
+      const alignment = Array.isArray(this.defaultAlignment)
+        ? this.defaultAlignment
+        : [this.defaultAlignment, this.defaultAlignment];
+      const [x, y] = alignment;
 
       if (this.isPositionHorizontal(position)) {
         return x || 'center';
@@ -135,11 +139,6 @@ export default {
           ...alignmentConfig,
         })
       );
-
-      console.log({
-        ...positionConfig,
-        ...alignmentConfig,
-      });
     },
   },
 };

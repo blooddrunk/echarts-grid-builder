@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-items-center tw-justify-between">
+  <div class="tw-flex tw-items-center tw-justify-between tw-pl-2">
     <span>
       <slot></slot>
     </span>

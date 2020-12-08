@@ -6,6 +6,7 @@
           v-if="currentChartConfig"
           ref="baseForm"
           :current-chart-option="currentChartConfig"
+          :current-chart-layout="currentChartLayout"
           :on-option-change="handleBaseOptionChange"
           :on-data-change="handleDataChange"
           :on-data-commit="handleDataCommit"
@@ -62,7 +63,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('chart', ['currentChartConfig']),
+    ...mapGetters('chart', ['currentChartConfig', 'currentChartLayout']),
   },
 
   methods: {

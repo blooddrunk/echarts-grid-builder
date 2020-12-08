@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tw-py-3 tw-text-center">
+    <div class="tw-py-3 tw-text-center tw-bg-gray-100">
       <el-button type="text" @click="handleDataEdit">
         <FontAwesomeIcon icon="table"></FontAwesomeIcon>
         编辑数据
@@ -27,10 +27,24 @@
           <el-input v-model="formData.title.subtext" :disabled="formState.title.subtext"></el-input>
         </el-form-item>
 
-        <PositionSelector
-          :avail-position="['top', 'bottom']"
-          @change="handleTitlePosChange"
-        ></PositionSelector>
+        <PositionSelector @change="handleTitlePosChange"></PositionSelector>
+      </CollapsedEditItem>
+
+      <CollapsedEditItem title="边距">
+        <MarginEditCombo v-model="formData.grid" class="tw-mt-4"></MarginEditCombo>
+      </CollapsedEditItem>
+
+      <CollapsedEditItem v-model="formData.legend.show" has-toggle title="图例">
+        <PositionSelector @change="handleLegendPosChange"></PositionSelector>
+      </CollapsedEditItem>
+
+      <CollapsedEditItem v-model="formData.tooltip.show" has-toggle title="提示">
+        <el-form-item label="触发方式">
+          <SimpleRadioGroup
+            v-model="formData.tooltip.trigger"
+            :items="tooltipTriggerItemList"
+          ></SimpleRadioGroup>
+        </el-form-item>
       </CollapsedEditItem>
     </el-form>
 
@@ -47,19 +61,23 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import { deepSet } from '@/utils/misc';
 import withForm from '@/mixins/withForm';
+import SimpleRadioGroup from '@/components/UI/SimpleRadioGroup';
 import DataEditDialog from './DataEditDialog';
 import TogglableLabel from './TogglableLabel';
 import CollapsedEditItem from './CollapsedEditItem';
 import PositionSelector from './PositionSelector';
+import MarginEditCombo from './MarginEditCombo';
 
 export default {
   name: 'ChartEditBase',
 
   components: {
+    SimpleRadioGroup,
     DataEditDialog,
     TogglableLabel,
     CollapsedEditItem,
     PositionSelector,
+    MarginEditCombo,
   },
 
   mixins: [
@@ -69,11 +87,24 @@ export default {
         text: '',
         subtext: '',
       },
+      grid: {},
+      legend: {
+        show: true,
+      },
+      tooltip: {
+        show: true,
+        trigger: 'axis',
+      },
     }),
   ],
 
   props: {
     currentChartOption: {
+      type: Object,
+      default: null,
+    },
+
+    currentChartLayout: {
       type: Object,
       default: null,
     },
@@ -102,6 +133,11 @@ export default {
         subtext: false,
       },
     },
+
+    tooltipTriggerItemList: [
+      { label: '轴', value: 'axis' },
+      { label: '点', value: 'item' },
+    ],
   }),
 
   created() {
@@ -133,6 +169,13 @@ export default {
     handleTitlePosChange(config) {
       this.formData.title = {
         ...this.formData.title,
+        ...config,
+      };
+    },
+
+    handleLegendPosChange(config) {
+      this.formData.legend = {
+        ...this.formData.legend,
         ...config,
       };
     },

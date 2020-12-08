@@ -60,7 +60,6 @@ POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.g
 一些所有图表通用的常见配置，如`title`, `legend`, `label`, `x(y)Axis`等。
 
 > 很多属性可以通过全局主题来配置的属性，如颜色，字体大小，边框等，可以不再单独配置，或者后续再开发
-
 > 可以考虑支持一些字符串类型的`formatter`属性(e.g .`formatter: '{value} kg'`)
 
 ### 具体图表
@@ -94,3 +93,8 @@ POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.g
 - 无坐标轴的图表（饼图/仪表盘)
 - 地图
 - 复合，如双 Y 轴，折线图+柱状图，地图+散点图，**单一种类 series 的图表开发时须为这些情况考虑**
+
+## WIP 其他可以增加/改进的功能
+
+- 升级到`echarts@5`
+- 同一种类型的图表可以同时对多个进行编辑

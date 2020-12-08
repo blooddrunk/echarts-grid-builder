@@ -106,7 +106,7 @@ export default {
         data: this.xlsxData,
         licenseKey: 'non-commercial-and-evaluation',
         language: 'zh-CN',
-        height: '45vh',
+        height: '35vh',
         width: '100%',
         rowHeaders: true,
         colHeaders: true,

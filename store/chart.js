@@ -70,6 +70,12 @@ export const getters = {
   gridConfig: (state) => state.canvasConfig?.grid || {},
   gridHeight: (state) => state.canvasConfig?.panelHeight,
 
+  canvasLayoutMap: (state) =>
+    state.canvasLayout.reduce((acc, layout) => {
+      acc[layout.i] = layout;
+      return acc;
+    }, {}),
+
   currentChartCount: (state) => (state.canvasLayout ? state.canvasLayout.length : 0),
 
   getChartDataById: (state) => {
@@ -92,6 +98,9 @@ export const getters = {
       };
     };
   },
+
+  currentChartLayout: (state, { canvasLayoutMap }) =>
+    canvasLayoutMap[state.currentEditingChart] || {},
 
   currentChartData: (state) => state.chartDataMap[state.currentEditingChart] || [],
 
