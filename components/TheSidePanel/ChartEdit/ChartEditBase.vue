@@ -14,15 +14,15 @@
           <el-input v-model="formData.title.text"></el-input>
         </el-form-item>
 
-        <el-form-item>
-          <template #label>
+        <el-form-item label="副标题">
+          <!-- <template #label>
             <TogglableLabel
               :default-value="false"
               :on-switch="(val) => handleFieldSwitch('title.subtext', val)"
             >
               副标题
             </TogglableLabel>
-          </template>
+          </template> -->
 
           <el-input v-model="formData.title.subtext" :disabled="formState.title.subtext"></el-input>
         </el-form-item>
@@ -35,7 +35,10 @@
       </CollapsedEditItem>
 
       <CollapsedEditItem v-model="formData.legend.show" has-toggle title="图例">
-        <PositionSelector @change="handleLegendPosChange"></PositionSelector>
+        <PositionSelector
+          default-position="bottom"
+          @change="handleLegendPosChange"
+        ></PositionSelector>
       </CollapsedEditItem>
 
       <CollapsedEditItem v-model="formData.tooltip.show" has-toggle title="提示">
@@ -58,12 +61,12 @@
 
 <script>
 import cloneDeep from 'lodash/cloneDeep';
+import pick from 'lodash/pick';
 
-import { deepSet } from '@/utils/misc';
+import defaultChartConfig from '@/assets/chart/default-config.json';
 import withForm from '@/mixins/withForm';
 import SimpleRadioGroup from '@/components/UI/SimpleRadioGroup';
 import DataEditDialog from './DataEditDialog';
-import TogglableLabel from './TogglableLabel';
 import CollapsedEditItem from './CollapsedEditItem';
 import PositionSelector from './PositionSelector';
 import MarginEditCombo from './MarginEditCombo';
@@ -74,29 +77,12 @@ export default {
   components: {
     SimpleRadioGroup,
     DataEditDialog,
-    TogglableLabel,
     CollapsedEditItem,
     PositionSelector,
     MarginEditCombo,
   },
 
-  mixins: [
-    withForm({
-      title: {
-        show: true,
-        text: '',
-        subtext: '',
-      },
-      grid: {},
-      legend: {
-        show: true,
-      },
-      tooltip: {
-        show: true,
-        trigger: 'axis',
-      },
-    }),
-  ],
+  mixins: [withForm(pick(defaultChartConfig.base, ['title', 'grid', 'legend', 'tooltip']))],
 
   props: {
     currentChartOption: {
@@ -140,6 +126,14 @@ export default {
     ],
   }),
 
+  watch: {
+    currentChartLayout(val) {
+      if (val) {
+        this.initFormData();
+      }
+    },
+  },
+
   created() {
     this.initFormData();
 
@@ -180,15 +174,15 @@ export default {
       };
     },
 
-    handleFieldSwitch(fieldPath, on, defaultValue = '') {
-      const path = fieldPath.split('.');
+    // handleFieldSwitch(fieldPath, on, defaultValue = '') {
+    //   const path = fieldPath.split('.');
 
-      deepSet(this.formState, path, !on, this.$set);
+    //   deepSet(this.formState, path, !on, this.$set);
 
-      if (!on) {
-        deepSet(this.formData, path, defaultValue);
-      }
-    },
+    //   if (!on) {
+    //     deepSet(this.formData, path, defaultValue);
+    //   }
+    // },
   },
 };
 </script>

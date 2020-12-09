@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 import Vue from 'vue';
 
 import { setState } from '@/utils/vuex';
-import sampleData from './sample-data.json';
+import sampleData from '@/assets/chart/sample-data.json';
 
 export const defaultCanvasConfig = {
   panelHeight: screen.height,

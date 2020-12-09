@@ -1,0 +1,43 @@
+{
+  "base": {
+    "title": {
+      "show": false,
+      "text": "",
+      "subtext": ""
+    },
+    "grid": {
+      "top": 60,
+      "bottom": 60,
+      "left": 60,
+      "right": 30
+    },
+    "legend": {
+      "show": true,
+
+      "top": "auto",
+      "right": "auto",
+      "bottom": 15,
+      "left": "center",
+
+      "textStyle": {
+        "fontSize": 10
+      }
+    },
+    "tooltip": {
+      "show": true,
+      "trigger": "axis"
+    },
+    "xAxis": { "type": "category" },
+    "yAxis": {}
+  },
+
+  "line": {
+    "seriesCommon": {
+      "symbol": "emptyCircle",
+      "symbolSize": 4,
+      "smooth": false
+    },
+    "xAxis": { "type": "category" },
+    "yAxis": {}
+  }
+}

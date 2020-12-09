@@ -1,8 +1,10 @@
 import isPlainObject from 'lodash/isPlainObject';
 import merge from 'lodash/merge';
+import omit from 'lodash/omit';
 
 import { precisionRound, toDisplayString, isNumeric } from '@/utils/math';
 import { breakStringWith } from '@/utils/misc';
+import defaultChartConfig from '@/assets/chart/default-config.json';
 
 export const getAxisLabelFormatter = (breakpoint = 1) => {
   return (val) => {
@@ -217,7 +219,7 @@ export const normalizePieData = (
   });
 };
 
-export const getDefaultSeriesBySource = (dataSource, series) => {
+export const getDefaultSeriesLengthByDataSource = (dataSource) => {
   let totalDim;
   if (!dataSource || !dataSource.length) {
     totalDim = 1;
@@ -226,36 +228,27 @@ export const getDefaultSeriesBySource = (dataSource, series) => {
     totalDim = Math.max((dimRow || []).length - 1, 1);
   }
 
-  return {
-    // dataset here is actually ignored when using getChartConfig(ById) vuex getters
-    // dataset: {
-    //   source: dataSource,
-    // },
-    series: Array(totalDim).fill({
+  return totalDim;
+};
+
+export const getDefaultSeries = ({ series, dataSource, seriesConfig } = {}) => {
+  if (Array.isArray(series)) {
+    return series;
+  }
+
+  if (typeof series === 'function') {
+    return this.series({ seriesConfig, dataSource });
+  } else {
+    const totalDim = getDefaultSeriesLengthByDataSource(dataSource);
+    return Array(totalDim).fill({
+      ...seriesConfig,
       type: series,
-    }),
-  };
+    });
+  }
 };
 
 export const getDefaultChartOptions = (...option) => {
-  return merge(
-    {
-      grid: {
-        left: 60,
-        right: 30,
-      },
-      legend: {
-        bottom: 5,
-        textStyle: {
-          fontSize: 10,
-        },
-      },
-      tooltip: {},
-      xAxis: { type: 'category' },
-      yAxis: {},
-    },
-    ...option
-  );
+  return merge({}, defaultChartConfig.base, ...option);
 };
 
 export const getDefaultHistChartOptions = () => {
@@ -268,26 +261,36 @@ export const getDefaultHistChartOptions = () => {
   };
 };
 
-// TODO: pre-populate these options maybe...
-export const getDefaultChartOptionsByType = ({ type, dataSource, option, series } = {}) => {
+const omitSpecialConfig = (config) => omit(config, ['seriesCommon']);
+
+export const getDefaultChartOptionsByType = ({ type, dataSource, series } = {}) => {
   if (!series && type) {
     series = type.slice(0, type.indexOf('-'));
   }
 
-  let newOption = getDefaultSeriesBySource(dataSource, series);
+  let newOption = {};
+  let commonSeriesConfig = {};
 
   switch (type) {
     case 'bar-base':
-      newOption = merge(newOption, getDefaultHistChartOptions(), option);
-      break;
-    case 'line-area':
-      newOption = merge(newOption, option);
+      newOption = getDefaultHistChartOptions();
       break;
     case 'line-base':
+      commonSeriesConfig = defaultChartConfig.line.seriesCommon;
+      newOption = omitSpecialConfig(defaultChartConfig.line);
+      break;
+    case 'line-area':
+      commonSeriesConfig = { ...defaultChartConfig.line.seriesCommon, areaStyle: {} };
+      newOption = omitSpecialConfig(defaultChartConfig.line);
+      break;
     default:
-      newOption = merge(newOption, option);
       break;
   }
 
-  return getDefaultChartOptions(newOption);
+  const computedSeries = getDefaultSeries({ series, dataSource, seriesConfig: commonSeriesConfig });
+
+  return getDefaultChartOptions({
+    ...newOption,
+    series: computedSeries,
+  });
 };

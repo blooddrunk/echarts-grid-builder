@@ -16,12 +16,9 @@
 <script>
 import isEqual from 'lodash/isEqual';
 
-const DEFAULT_MARGIN = {
-  top: 60,
-  bottom: 60,
-  left: 60,
-  right: 30,
-};
+import defaultChartConfig from '@/assets/chart/default-config.json';
+
+const DEFAULT_MARGIN = defaultChartConfig.base.grid;
 
 export default {
   name: 'MarginEditCombo',

@@ -11,6 +11,11 @@
         <FontAwesomeIcon icon="chart-area"></FontAwesomeIcon>
       </el-button>
 
+      <el-button type="primary">
+        编辑主题（WIP）
+        <FontAwesomeIcon icon="palette"></FontAwesomeIcon>
+      </el-button>
+
       <el-button type="primary" @click="toggleFullscreenMode">
         全屏
         <FontAwesomeIcon icon="expand"></FontAwesomeIcon>

@@ -21,7 +21,7 @@
         :options="chartOptions"
       ></ECharts>
 
-      <div :class="$style.toolbar">
+      <div v-show="!fullscreen" :class="$style.toolbar">
         <el-button type="text" @click="previewConfig()">
           <FontAwesomeIcon icon="code"></FontAwesomeIcon>
         </el-button>
@@ -64,6 +64,7 @@ export default {
 
   computed: {
     ...mapState('chart', ['currentEditingChart', 'chartDataMap', 'chartConfigMap']),
+    ...mapState('ui', ['fullscreen']),
     ...mapGetters('chart', ['getChartDataById', 'getChartConfigById']),
 
     currentChartId() {

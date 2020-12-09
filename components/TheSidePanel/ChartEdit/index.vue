@@ -35,7 +35,6 @@
 import { mapGetters, mapMutations } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 
-import withForm from '@/mixins/withForm';
 import ChartEditBase from './ChartEditBase';
 
 export default {
@@ -44,17 +43,6 @@ export default {
   components: {
     ChartEditBase,
   },
-
-  mixins: [
-    withForm({
-      base: {
-        title: {
-          text: '',
-          subtext: '',
-        },
-      },
-    }),
-  ],
 
   data: () => ({
     activeTab: 'base',

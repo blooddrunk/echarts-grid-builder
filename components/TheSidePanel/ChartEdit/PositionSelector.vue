@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import isEqual from 'lodash/isEqual';
+
 import SimpleRadioGroup from '@/components/UI/SimpleRadioGroup';
 
 const DEFAULT_CONFIG = {
@@ -33,25 +35,29 @@ export default {
       default: () => ['top', 'bottom'],
     },
 
-    defaultPosition: {
-      type: String,
-      default: 'top',
-      validator: (val) => ['top', 'right', 'bottom', 'left'].includes(val),
-    },
-
     margin: {
       type: Number,
       default: 15,
     },
 
-    defaultAlignment: {
-      type: [Array, String],
-      default: () => ['center', 'middle'],
+    value: {
+      type: Object,
+      required: true,
+    },
+
+    fallbackPosition: {
+      type: String,
+      default: 'top',
+    },
+
+    fallbackAlignment: {
+      type: String,
+      default: 'center',
     },
   },
 
   data: (vm) => ({
-    position: vm.defaultPosition,
+    position: '',
 
     alignment: '',
   }),
@@ -87,11 +93,34 @@ export default {
         ];
       }
     },
+
+    currentPositionConfig() {
+      return this.getConfigByValue(this.positionList, this.position);
+    },
+
+    currentAlignmentConfig() {
+      return this.getConfigByValue(this.alignmentList, this.alignment);
+    },
+
+    computedConfig() {
+      return Object.assign(
+        {},
+        DEFAULT_CONFIG,
+        this.currentPositionConfig,
+        this.currentAlignmentConfig
+      );
+    },
   },
 
   watch: {
+    value(val) {
+      if (!isEqual(val, this.computedConfig)) {
+        this.initPositionAndAlignment();
+      }
+    },
+
     position(val, oldVal) {
-      this.alignment = this.getDefaultAlignmentByPosition(val);
+      this.setAlignmentByPosition();
       this.handleConfigChange();
     },
 
@@ -101,7 +130,7 @@ export default {
   },
 
   created() {
-    this.alignment = this.getDefaultAlignmentByPosition(this.position);
+    this.initPositionAndAlignment();
 
     this.handleConfigChange();
   },
@@ -111,16 +140,38 @@ export default {
       return ['top', 'bottom'].includes(position);
     },
 
-    getDefaultAlignmentByPosition(position) {
-      const alignment = Array.isArray(this.defaultAlignment)
-        ? this.defaultAlignment
-        : [this.defaultAlignment, this.defaultAlignment];
-      const [x, y] = alignment;
-
-      if (this.isPositionHorizontal(position)) {
-        return x || 'center';
+    initPositionAndAlignment() {
+      const { top, bottom, left } = this.value;
+      if (top) {
+        this.position = 'top';
+        if (top === 'middle') {
+          this.alignment = top;
+        }
+      } else if (bottom) {
+        this.position = 'bottom';
       }
-      return y || 'middle';
+
+      if (left === 'center') {
+        this.alignment = 'center';
+      }
+
+      // ! all other values are ignored
+
+      if (!this.position) {
+        this.position = this.fallbackPosition;
+      }
+
+      if (!this.alignment) {
+        this.alignment = this.fallbackAlignment;
+      }
+    },
+
+    setAlignmentByPosition(pos, oldPos) {
+      if (this.isPositionHorizontal(pos) && !this.isPositionHorizontal(oldPos)) {
+        this.alignment = 'center';
+      } else if (!this.isPositionHorizontal(pos) && this.isPositionHorizontal(oldPos)) {
+        this.alignment = 'middle';
+      }
     },
 
     getConfigByValue(list, value) {
@@ -129,16 +180,7 @@ export default {
     },
 
     handleConfigChange() {
-      const positionConfig = this.getConfigByValue(this.positionList, this.position);
-      const alignmentConfig = this.getConfigByValue(this.alignmentList, this.alignment);
-
-      this.$emit(
-        'change',
-        Object.assign({}, DEFAULT_CONFIG, {
-          ...positionConfig,
-          ...alignmentConfig,
-        })
-      );
+      this.$emit('input', this.computedConfig);
     },
   },
 };

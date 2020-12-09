@@ -116,9 +116,9 @@ export default {
         manualColumnResize: true,
         manualRowResize: true,
         afterChange: this.handleDataChange,
-        columns: (index) => {
+        cells: (row, column) => {
           return {
-            type: index > 0 ? 'numeric' : 'text',
+            type: row > 0 && column > 0 ? 'numeric' : 'text',
           };
         },
       };
