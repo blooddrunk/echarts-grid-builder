@@ -9,6 +9,9 @@ export const state = () => ({
 
   backgroundList: ['bg-0', 'bg-1'],
   currentBackground: '',
+
+  configPreviewDialogVisible: false,
+  configPreviewContent: {},
 });
 
 export const getters = {
@@ -43,6 +46,9 @@ export const mutations = {
       title: '编辑图表',
     };
   },
+
+  showConfigPreviewDialog: setState('configPreviewDialogVisible'),
+  setConfigPreviewContent: setState('configPreviewContent'),
 };
 
 const shouldOpenPanel = (currentPanelComponent, targetComponent) => {

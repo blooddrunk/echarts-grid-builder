@@ -21,6 +21,7 @@ import {
   faDownload,
   faPen,
   faFilePdf,
+  faCode,
 } from '@fortawesome/free-solid-svg-icons';
 
 dom.watch();
@@ -39,7 +40,8 @@ library.add(
   faArrowRight,
   faDownload,
   faPen,
-  faFilePdf
+  faFilePdf,
+  faCode
 );
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);

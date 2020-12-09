@@ -20,6 +20,8 @@
     >
       <TheSidePanel :create-grid-item="createGridItem" :on-drag="handleDrag"></TheSidePanel>
     </transition>
+
+    <TheConfigPreview></TheConfigPreview>
   </main>
 </template>
 
@@ -31,6 +33,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import Toolbox from '@/components/Main/Toolbox';
 import CanvasArea from '@/components/Main/CanvasArea';
 import TheSidePanel from '@/components/TheSidePanel';
+import TheConfigPreview from '@/components/TheConfigPreview';
 
 const DROP_PLACEHOLDER = 'drop';
 
@@ -41,6 +44,7 @@ export default {
     Toolbox,
     CanvasArea,
     TheSidePanel,
+    TheConfigPreview,
   },
 
   data: () => ({

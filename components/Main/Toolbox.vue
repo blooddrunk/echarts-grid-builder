@@ -3,22 +3,25 @@
     <header class="tw-space-x-3">
       <el-button type="primary" @click="toggleBgPanel">
         选择背景
-        <FontAwesomeIcon class="tw-ml-1" icon="image"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="image"></FontAwesomeIcon>
       </el-button>
 
       <el-button type="primary" @click="toggleChartPanel">
         选择图表
-        <FontAwesomeIcon class="tw-ml-1" icon="chart-area"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="chart-area"></FontAwesomeIcon>
       </el-button>
 
       <el-button type="primary" @click="toggleFullscreenMode">
         全屏
-        <FontAwesomeIcon class="tw-ml-1" icon="expand"></FontAwesomeIcon>
+        <FontAwesomeIcon icon="expand"></FontAwesomeIcon>
       </el-button>
 
-      <el-dropdown split-button type="primary" @command="handleExport">
-        导出画布
-        <FontAwesomeIcon icon="download"></FontAwesomeIcon>
+      <el-dropdown type="primary" @command="handleExport">
+        <el-button type="primary">
+          导出画布
+          <FontAwesomeIcon icon="download"></FontAwesomeIcon>
+        </el-button>
+
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="image">

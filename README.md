@@ -97,4 +97,5 @@ POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.g
 ## WIP 其他可以增加/改进的功能
 
 - 升级到`echarts@5`
-- 同一种类型的图表可以同时对多个进行编辑
+- 支持保存默认配置（分为基本配置、每种图表专有配置）
+- 支持预览图表配置`JSON`

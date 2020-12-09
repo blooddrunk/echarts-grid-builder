@@ -22,6 +22,9 @@
       ></ECharts>
 
       <div :class="$style.toolbar">
+        <el-button type="text" @click="previewConfig()">
+          <FontAwesomeIcon icon="code"></FontAwesomeIcon>
+        </el-button>
         <el-button type="text" @click="removeItem(layout.i)">
           <FontAwesomeIcon icon="times"></FontAwesomeIcon>
         </el-button>
@@ -88,6 +91,7 @@ export default {
 
   methods: {
     ...mapMutations('chart', ['updateChartConfigById']),
+    ...mapMutations('ui', ['showConfigPreviewDialog', 'setConfigPreviewContent']),
 
     startWatching() {
       // ! watch current chart config and data change,
@@ -125,6 +129,14 @@ export default {
           this.$refs.chart.resize();
         }, 300);
       }
+    },
+
+    previewConfig() {
+      this.setConfigPreviewContent({
+        base: this.chartOptions,
+        full: this.$refs.chart.computedOptions,
+      });
+      this.showConfigPreviewDialog(true);
     },
   },
 };

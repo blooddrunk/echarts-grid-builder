@@ -31,6 +31,8 @@ export default {
     'animate.css',
     '@/assets/scss/element-ui.scss',
     'handsontable/dist/handsontable.full.css',
+    'prismjs/themes/prism.css',
+    'prismjs/plugins/toolbar/prism-toolbar.css',
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
