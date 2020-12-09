@@ -1,7 +1,5 @@
 # 开发计划
 
-Gitlab REPO: [http://git.komect.net/DPYY/X-CHARTS](http://git.komect.net/DPYY/X-CHARTS)
-
 POC 原型 [http://jelinenaro.gitee.io/echarts-grid-builder](http://jelinenaro.gitee.io/echarts-grid-builder)
 
 图表配置可参考
