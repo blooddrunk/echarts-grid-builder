@@ -24,9 +24,7 @@ export default {
 
 <style lang="scss" module>
 .heading {
-  background-image: linear-gradient(to right, theme('colors.purple.500') 65%, var(--color-primary));
-  background-color: var(--color-primary);
-
+  @apply tw-bg-gradient-to-r tw-from-blue-400 tw-to-blue-300;
   @apply tw-h-20;
   @apply tw-shadow tw-text-white;
 }

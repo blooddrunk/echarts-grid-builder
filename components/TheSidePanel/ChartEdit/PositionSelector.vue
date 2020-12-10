@@ -105,6 +105,7 @@ export default {
     computedConfig() {
       return Object.assign(
         {},
+        this.value,
         DEFAULT_CONFIG,
         this.currentPositionConfig,
         this.currentAlignmentConfig
@@ -132,6 +133,7 @@ export default {
   created() {
     this.initPositionAndAlignment();
 
+    // make input position consistent
     this.handleConfigChange();
   },
 
@@ -142,12 +144,12 @@ export default {
 
     initPositionAndAlignment() {
       const { top, bottom, left } = this.value;
-      if (top) {
+      if (top && top !== 'auto') {
         this.position = 'top';
         if (top === 'middle') {
           this.alignment = top;
         }
-      } else if (bottom) {
+      } else if (bottom && bottom !== 'auto') {
         this.position = 'bottom';
       }
 

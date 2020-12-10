@@ -24,10 +24,10 @@
             </TogglableLabel>
           </template> -->
 
-          <el-input v-model="formData.title.subtext" :disabled="formState.title.subtext"></el-input>
+          <el-input v-model="formData.title.subtext"></el-input>
         </el-form-item>
 
-        <PositionSelector @change="handleTitlePosChange"></PositionSelector>
+        <PositionSelector v-model="formData.title"></PositionSelector>
       </CollapsedEditItem>
 
       <CollapsedEditItem title="边距">
@@ -35,10 +35,7 @@
       </CollapsedEditItem>
 
       <CollapsedEditItem v-model="formData.legend.show" has-toggle title="图例">
-        <PositionSelector
-          default-position="bottom"
-          @change="handleLegendPosChange"
-        ></PositionSelector>
+        <PositionSelector v-model="formData.legend"></PositionSelector>
       </CollapsedEditItem>
 
       <CollapsedEditItem v-model="formData.tooltip.show" has-toggle title="提示">

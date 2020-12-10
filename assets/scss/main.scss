@@ -1,15 +1,14 @@
 @use 'override';
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-  @apply tw-text-dark tw-overflow-hidden;
+  @apply tw-font-sans tw-text-dark tw-antialiased;
+  @apply tw-overflow-hidden;
 }
 
 :root {
-  --color-primary: theme('colors.purple.400');
-  --color-secondary: theme('colors.pink.400');
-  --color-tertiary: theme('colors.blue.400');
+  --color-primary: theme('colors.green.300');
+  --color-secondary: theme('colors.blue.300');
+  --color-tertiary: theme('colors.cyan.400');
   --color-light: theme('colors.gray.300');
   --color-medium: theme('colors.gray.500');
   --color-dark: theme('colors.gray.700');

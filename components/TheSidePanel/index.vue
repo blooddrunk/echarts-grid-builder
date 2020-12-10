@@ -1,7 +1,7 @@
 <template>
   <div v-if="isSidePanelVisible" :class="$style.panel">
-    <header class="tw-flex tw-items-center tw-px-3 tw-border-b-thin tw-border-light">
-      <h3 class="tw-font-semibold tw-text-primary">{{ currentSidePanelContent.title }}</h3>
+    <header class="tw-flex tw-items-center tw-px-3 tw-border-b-thin tw-border-light tw-text-dark">
+      <h3 class="tw-font-semibold">{{ currentSidePanelContent.title }}</h3>
 
       <el-button class="tw-ml-auto tw-text-xl" type="text" @click="hidePanel">
         <FontAwesomeIcon icon="times"></FontAwesomeIcon>

@@ -151,7 +151,7 @@ export default {
 
   loadingIndicator: {
     name: 'pulse',
-    color: '#b794f4',
+    color: '#38BDF8',
     background: '#f7fafc',
   },
 
