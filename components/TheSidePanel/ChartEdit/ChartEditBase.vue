@@ -8,7 +8,7 @@
       </el-button>
     </div>
 
-    <el-form size="mini" label-width="110px">
+    <el-form v-if="hasFormData" size="mini" label-width="110px">
       <CollapsedEditItem v-model="formData.title.show" has-toggle title="标题">
         <el-form-item label="主标题">
           <el-input v-model="formData.title.text"></el-input>
@@ -57,12 +57,9 @@
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep';
-import pick from 'lodash/pick';
-
-import defaultChartConfig from '@/assets/chart/default-config.json';
-import withForm from '@/mixins/withForm';
 import SimpleRadioGroup from '@/components/UI/SimpleRadioGroup';
+import withForm from '@/mixins/withForm';
+import withChartEdit from './mixins/edit';
 import DataEditDialog from './DataEditDialog';
 import CollapsedEditItem from './CollapsedEditItem';
 import PositionSelector from './PositionSelector';
@@ -79,24 +76,13 @@ export default {
     MarginEditCombo,
   },
 
-  mixins: [withForm(pick(defaultChartConfig.base, ['title', 'grid', 'legend', 'tooltip']))],
+  mixins: [
+    // base config
+    withForm({}),
+    withChartEdit,
+  ],
 
   props: {
-    currentChartOption: {
-      type: Object,
-      default: null,
-    },
-
-    currentChartLayout: {
-      type: Object,
-      default: null,
-    },
-
-    onOptionChange: {
-      type: Function,
-      required: true,
-    },
-
     onDataChange: {
       type: Function,
       required: true,
@@ -111,64 +97,15 @@ export default {
   data: () => ({
     dataEditDialogVisible: false,
 
-    formState: {
-      title: {
-        subtext: false,
-      },
-    },
-
     tooltipTriggerItemList: [
       { label: '轴', value: 'axis' },
       { label: '点', value: 'item' },
     ],
   }),
 
-  watch: {
-    currentChartLayout(val) {
-      if (val) {
-        this.initFormData();
-      }
-    },
-  },
-
-  created() {
-    this.initFormData();
-
-    this.$watch(
-      'formData',
-      function () {
-        this.onOptionChange(this.formData);
-      },
-      { deep: true }
-    );
-  },
-
   methods: {
     handleDataEdit() {
       this.dataEditDialogVisible = true;
-    },
-
-    initFormData() {
-      const currentChartOption = cloneDeep(this.currentChartOption);
-      Object.keys(this.form.data).forEach((key) => {
-        if (key in currentChartOption) {
-          this.form.data[key] = currentChartOption[key];
-        }
-      });
-    },
-
-    handleTitlePosChange(config) {
-      this.formData.title = {
-        ...this.formData.title,
-        ...config,
-      };
-    },
-
-    handleLegendPosChange(config) {
-      this.formData.legend = {
-        ...this.formData.legend,
-        ...config,
-      };
     },
 
     // handleFieldSwitch(fieldPath, on, defaultValue = '') {

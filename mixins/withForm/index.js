@@ -1,4 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
+import pick from 'lodash/pick';
+import isEmpty from 'lodash/isEmpty';
 
 import mixins from '@/utils/mixins.js';
 import withId from '@/mixins/withId.js';
@@ -15,7 +17,7 @@ export const mixinFactory = (
 
   data: (vm) => {
     if (typeof initialData === 'function') {
-      initialData = initialData.call(vm);
+      initialData = initialData(vm);
     }
 
     return {
@@ -38,6 +40,10 @@ export const mixinFactory = (
   computed: {
     formData() {
       return this[namespace].data;
+    },
+
+    hasFormData() {
+      return !isEmpty(this.formData);
     },
 
     formId() {
@@ -107,19 +113,22 @@ export const mixinFactory = (
       await this.clearFormError();
     },
 
-    // for compatibility with vuex version...
-    updateForm({ __setDefault = true, ...payload } = {}) {
+    updateForm(payload, { setDefault = true, strict = true } = {}) {
+      if (strict) {
+        payload = pick(payload, Object.keys(this[namespace].data));
+      }
+
       this[namespace].data = {
         ...this[namespace].data,
         ...payload,
       };
 
-      if (__setDefault) {
+      if (setDefault) {
         this[namespace].defaultData = cloneDeep(this[namespace].data);
       }
     },
 
-    async fetchForm({ __defaultData = {}, ...config }) {
+    async fetchForm(config, { strict = false, presetData = {} } = {}) {
       this[namespace].fetchError = null;
       this[namespace].loading = true;
 
@@ -129,9 +138,14 @@ export const mixinFactory = (
           cancellable: `fetchForm-${this.$_id}`,
         });
 
+        let data = response.data;
+        if (strict) {
+          data = pick(data, Object.keys(this[namespace].data));
+        }
+
         this[namespace].data = {
-          ...__defaultData,
-          ...response.data,
+          ...presetData,
+          ...data,
         };
 
         // fetched successfully, update default data

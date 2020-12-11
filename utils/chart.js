@@ -1,6 +1,5 @@
 import isPlainObject from 'lodash/isPlainObject';
 import merge from 'lodash/merge';
-import omit from 'lodash/omit';
 
 import { precisionRound, toDisplayString, isNumeric } from '@/utils/math';
 import { breakStringWith } from '@/utils/misc';
@@ -261,36 +260,49 @@ export const getDefaultHistChartOptions = () => {
   };
 };
 
-const omitSpecialConfig = (config) => omit(config, ['seriesCommon']);
+const normalizeChartConfigByKey = (key, series, extraSeriesConfig) => {
+  const domain = defaultChartConfig[key];
+  if (!domain) {
+    throw new Error(`Failed to retrieve chart config for ${key}`);
+  }
+
+  const commonSeriesConfig = {
+    ...domain.__series,
+    ...extraSeriesConfig,
+  };
+
+  return {
+    config: domain,
+    seriesConfig: commonSeriesConfig,
+  };
+};
 
 export const getDefaultChartOptionsByType = ({ type, dataSource, series } = {}) => {
   if (!series && type) {
     series = type.slice(0, type.indexOf('-'));
   }
 
-  let newOption = {};
-  let commonSeriesConfig = {};
+  let config = {};
+  let seriesConfig = {};
 
   switch (type) {
     case 'bar-base':
-      newOption = getDefaultHistChartOptions();
+      ({ config, seriesConfig } = normalizeChartConfigByKey('bar', series));
       break;
     case 'line-base':
-      commonSeriesConfig = defaultChartConfig.line.seriesCommon;
-      newOption = omitSpecialConfig(defaultChartConfig.line);
+      ({ config, seriesConfig } = normalizeChartConfigByKey('line', series));
       break;
     case 'line-area':
-      commonSeriesConfig = { ...defaultChartConfig.line.seriesCommon, areaStyle: {} };
-      newOption = omitSpecialConfig(defaultChartConfig.line);
+      ({ config, seriesConfig } = normalizeChartConfigByKey('line', series, { areaStyle: {} }));
       break;
     default:
       break;
   }
 
-  const computedSeries = getDefaultSeries({ series, dataSource, seriesConfig: commonSeriesConfig });
+  const computedSeries = getDefaultSeries({ series, dataSource, seriesConfig });
 
   return getDefaultChartOptions({
-    ...newOption,
+    ...config,
     series: computedSeries,
   });
 };

@@ -72,7 +72,7 @@ export default {
     },
 
     selected() {
-      return this.currentEditingChart === this.layout.i;
+      return this.currentEditingChart === this.layout.i && !this.fullscreen;
     },
   },
 

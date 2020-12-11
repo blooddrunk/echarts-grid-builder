@@ -26,16 +26,23 @@
     "tooltip": {
       "show": true,
       "trigger": "axis"
+    }
+  },
+
+  "line": {
+    "__series": {
+      "enable": true,
+      "symbol": "emptyCircle",
+      "symbolSize": 4,
+      "smooth": true
     },
     "xAxis": { "type": "category" },
     "yAxis": {}
   },
 
-  "line": {
-    "seriesCommon": {
-      "symbol": "emptyCircle",
-      "symbolSize": 4,
-      "smooth": false
+  "bar": {
+    "__series": {
+      "enable": true
     },
     "xAxis": { "type": "category" },
     "yAxis": {}
