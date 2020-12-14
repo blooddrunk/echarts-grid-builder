@@ -45,10 +45,9 @@ const forceLogout = ({ app, redirect, store, route }, message = '会话已过期
       from: route.name,
       ...route.query,
     });
-    return message;
   }
 
-  return '';
+  return message;
 };
 
 const forceChangePassword = ({ app, store }) => {

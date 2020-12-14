@@ -99,7 +99,6 @@ export default {
     ...mapMutations('chart', ['updateChartConfig', 'updateChartData']),
 
     handleBaseOptionChange(option) {
-      console.log(option);
       this.baseOption = {
         ...this.baseOption,
         ...option,

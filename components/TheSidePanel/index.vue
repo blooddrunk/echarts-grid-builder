@@ -22,6 +22,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
+import defaultChartConfig from '@/assets/chart/default-config.json';
 import ChartEdit from './ChartEdit';
 import BackgroundEdit from './BackgroundEdit';
 import ChartGallery from './ChartGallery';
@@ -33,6 +34,10 @@ export default {
     BackgroundEdit,
     ChartGallery,
     ChartEdit,
+  },
+
+  provide: {
+    defaultChartConfig,
   },
 
   inheritAttrs: false,
@@ -84,6 +89,24 @@ export default {
       .el-input-number {
         @apply tw-w-full;
       }
+    }
+  }
+
+  fieldset {
+    @apply tw-py-2 tw-px-3;
+  }
+
+  legend {
+    @apply tw-text-primary;
+    @apply tw-w-full tw-grid tw-items-center tw-gap-x-3;
+
+    grid-template-columns: 1fr auto 2fr;
+
+    &:before,
+    &:after {
+      content: '';
+      @apply tw-flex-grow;
+      @apply tw-border-b-2 tw-border-primary;
     }
   }
 }

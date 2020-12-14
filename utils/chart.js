@@ -260,21 +260,14 @@ export const getDefaultHistChartOptions = () => {
   };
 };
 
-const normalizeChartConfigByKey = (key, series, extraSeriesConfig) => {
-  const domain = defaultChartConfig[key];
-  if (!domain) {
-    throw new Error(`Failed to retrieve chart config for ${key}`);
+const normalizeChartConfigByKey = (baseKey, key) => {
+  const baseConfig = defaultChartConfig[baseKey];
+  const extraConfig = defaultChartConfig[key];
+  if (!baseConfig) {
+    throw new Error(`Failed to retrieve chart config for ${baseKey}`);
   }
 
-  const commonSeriesConfig = {
-    ...domain.__series,
-    ...extraSeriesConfig,
-  };
-
-  return {
-    config: domain,
-    seriesConfig: commonSeriesConfig,
-  };
+  return merge({}, baseConfig, extraConfig);
 };
 
 export const getDefaultChartOptionsByType = ({ type, dataSource, series } = {}) => {
@@ -283,23 +276,22 @@ export const getDefaultChartOptionsByType = ({ type, dataSource, series } = {}) 
   }
 
   let config = {};
-  let seriesConfig = {};
 
   switch (type) {
     case 'bar-base':
-      ({ config, seriesConfig } = normalizeChartConfigByKey('bar', series));
+      config = normalizeChartConfigByKey('bar');
       break;
     case 'line-base':
-      ({ config, seriesConfig } = normalizeChartConfigByKey('line', series));
+      config = normalizeChartConfigByKey('line');
       break;
     case 'line-area':
-      ({ config, seriesConfig } = normalizeChartConfigByKey('line', series, { areaStyle: {} }));
+      config = normalizeChartConfigByKey('line', type);
       break;
     default:
       break;
   }
 
-  const computedSeries = getDefaultSeries({ series, dataSource, seriesConfig });
+  const computedSeries = getDefaultSeries({ series, dataSource, seriesConfig: config.__series });
 
   return getDefaultChartOptions({
     ...config,

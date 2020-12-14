@@ -34,10 +34,19 @@
       "enable": true,
       "symbol": "emptyCircle",
       "symbolSize": 4,
-      "smooth": true
+      "smooth": true,
+      "areaStyle": null
     },
     "xAxis": { "type": "category" },
     "yAxis": {}
+  },
+
+  "line-area": {
+    "__series": {
+      "areaStyle": {
+        "opacity": 0.65
+      }
+    }
   },
 
   "bar": {
