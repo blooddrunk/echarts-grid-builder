@@ -24,7 +24,7 @@ export default {
   },
 
   watch: {
-    currentChartLayout(val) {
+    'currentChartLayout.i'(val) {
       if (val) {
         this.initFormData();
       }

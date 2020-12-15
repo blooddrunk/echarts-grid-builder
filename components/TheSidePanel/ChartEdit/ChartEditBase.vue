@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import SimpleRadioGroup from '@/components/UI/SimpleRadioGroup';
 import withForm from '@/mixins/withForm';
 import withChartEdit from './mixins/edit';
 import DataEditDialog from './DataEditDialog';
@@ -69,7 +68,6 @@ export default {
   name: 'ChartEditBase',
 
   components: {
-    SimpleRadioGroup,
     DataEditDialog,
     CollapsedEditItem,
     PositionSelector,

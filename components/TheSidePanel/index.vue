@@ -83,6 +83,14 @@ export default {
       .el-form-item:last-child {
         @apply tw-mb-0;
       }
+
+      .el-collapse-item__header {
+        @apply tw-bg-gray-200 tw-bg-opacity-70;
+      }
+
+      .el-collapse-item__content {
+        @apply tw-bg-gray-200 tw-bg-opacity-90;
+      }
     }
 
     .el-form-item {

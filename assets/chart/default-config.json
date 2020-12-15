@@ -32,13 +32,39 @@
   "line": {
     "__series": {
       "enable": true,
-      "symbol": "emptyCircle",
       "symbolSize": 4,
       "smooth": true,
       "areaStyle": null
     },
-    "xAxis": { "type": "category" },
-    "yAxis": {}
+    "xAxis": {
+      "type": "category",
+      "show": true,
+      "axisLine": {
+        "show": true
+      },
+      "axisTick": {
+        "show": false
+      },
+      "splitLine": {
+        "show": true
+      },
+      "axisLabel": {
+        "show": true,
+        "rotate": 0
+      }
+    },
+    "yAxis": {
+      "show": true,
+      "axisLine": {
+        "show": true
+      },
+      "axisTick": {
+        "show": false
+      },
+      "splitLine": {
+        "show": true
+      }
+    }
   },
 
   "line-area": {
@@ -53,7 +79,7 @@
     "__series": {
       "enable": true
     },
-    "xAxis": { "type": "category" },
-    "yAxis": {}
+    "xAxis": { "show": true, "type": "category" },
+    "yAxis": { "show": true }
   }
 }

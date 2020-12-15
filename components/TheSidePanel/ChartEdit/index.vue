@@ -119,8 +119,9 @@ export default {
 
     handleReset() {
       this.$refs.baseForm.resetForm();
+      this.$refs.adForm.resetForm();
 
-      this.handleOptionCommit();
+      this.handleBaseOptionCommit();
     },
   },
 };

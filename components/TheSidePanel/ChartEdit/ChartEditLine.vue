@@ -1,9 +1,14 @@
 <template>
   <div>
     <el-form v-if="hasFormData" size="mini" label-width="110px">
-      <AxisEdit v-model="formData.xAxis" title="X轴"></AxisEdit>
+      <AxisEdit
+        v-model="formData.xAxis"
+        :chart-id="currentChartLayout.i"
+        title="X轴"
+        type="category"
+      ></AxisEdit>
 
-      <AxisEdit v-model="formData.yAxis" title="Y轴"></AxisEdit>
+      <AxisEdit v-model="formData.yAxis" :chart-id="currentChartLayout.i" title="Y轴"></AxisEdit>
 
       <CollapsedEditItem title="系列">
         <el-form-item class="tw-pb-3 tw-border-b tw-border-b-medium">
@@ -48,6 +53,13 @@
                 :min="1"
                 :max="20"
               ></el-input-number>
+            </el-form-item>
+
+            <el-form-item label="区域填充">
+              <ComplexSwitch
+                v-model="item.areaStyle"
+                :value-pair="[defaultAreaStyle, null]"
+              ></ComplexSwitch>
             </el-form-item>
           </fieldset>
         </div>

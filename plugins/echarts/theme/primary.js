@@ -250,7 +250,7 @@ export default {
     axisTick: {
       show: false,
       lineStyle: {
-        color: '#333',
+        color: '#cccccc',
       },
     },
     axisLabel: {
