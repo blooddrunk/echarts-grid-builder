@@ -250,16 +250,6 @@ export const getDefaultChartOptions = (...option) => {
   return merge({}, defaultChartConfig.base, ...option);
 };
 
-export const getDefaultHistChartOptions = () => {
-  return {
-    xAxis: {
-      axisLabel: {
-        rotate: 45,
-      },
-    },
-  };
-};
-
 const normalizeChartConfigByKey = (baseKey, key) => {
   const baseConfig = defaultChartConfig[baseKey];
   const extraConfig = defaultChartConfig[key];
@@ -285,6 +275,9 @@ export const getDefaultChartOptionsByType = ({ type, dataSource, series } = {}) 
       config = normalizeChartConfigByKey('line');
       break;
     case 'line-area':
+      config = normalizeChartConfigByKey('line', type);
+      break;
+    case 'line-stack':
       config = normalizeChartConfigByKey('line', type);
       break;
     default:

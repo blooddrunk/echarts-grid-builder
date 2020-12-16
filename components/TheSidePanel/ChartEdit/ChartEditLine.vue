@@ -37,6 +37,10 @@
               :value-pair="[defaultAreaStyle, null]"
             ></ComplexSwitch>
           </el-form-item>
+          <el-form-item label="堆叠">
+            <el-switch v-model="formData.__series.stack" active-value="总量" :inactive-value="null">
+            </el-switch>
+          </el-form-item>
         </template>
         <div v-else>
           <fieldset v-for="(item, index) in formData.series" :key="index">
@@ -60,6 +64,11 @@
                 v-model="item.areaStyle"
                 :value-pair="[defaultAreaStyle, null]"
               ></ComplexSwitch>
+            </el-form-item>
+
+            <el-form-item label="堆叠">
+              <el-switch v-model="item.stack" active-value="总量" :inactive-value="null">
+              </el-switch>
             </el-form-item>
           </fieldset>
         </div>

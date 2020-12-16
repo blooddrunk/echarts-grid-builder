@@ -53,7 +53,7 @@
           allow-create
           default-first-option
           clearable
-          placeholder="可以手动添加并选择数字选项"
+          placeholder="可以手动添加数字选项"
         ></SimpleSelect>
       </el-form-item>
     </CollapsedEditItem>

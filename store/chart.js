@@ -44,6 +44,7 @@ export const state = () => ({
       items: [
         { description: '一般折线图', key: 'line-base' },
         { description: '面积图', key: 'line-area' },
+        { description: '堆叠面积图', key: 'line-stack' },
       ],
     },
 

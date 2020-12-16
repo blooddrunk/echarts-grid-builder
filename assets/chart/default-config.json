@@ -75,6 +75,16 @@
     }
   },
 
+  "line-stack": {
+    "__series": {
+      "stack": "总量",
+
+      "areaStyle": {
+        "opacity": 0.65
+      }
+    }
+  },
+
   "bar": {
     "__series": {
       "enable": true

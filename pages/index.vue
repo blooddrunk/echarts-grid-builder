@@ -59,7 +59,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('chart', ['canvasLayout']),
+    ...mapState('chart', ['canvasLayout', 'currentEditingChart']),
     ...mapGetters('chart', ['currentChartCount', 'gridConfig']),
 
     colNum() {
@@ -73,7 +73,13 @@ export default {
   },
 
   methods: {
-    ...mapMutations('chart', ['addCanvasItem', 'removeCanvasItemById', 'setCanvasLayout']),
+    ...mapMutations('chart', [
+      'addCanvasItem',
+      'removeCanvasItemById',
+      'setCanvasLayout',
+      'setCurrentEditingChart',
+    ]),
+    ...mapMutations('ui', ['toggleSidePanel']),
 
     createDefaultItem(id, props) {
       return {
@@ -109,6 +115,11 @@ export default {
         });
         this.localLayout = this.localLayout.filter((layout) => layout.i !== id);
         this.removeCanvasItemById(id);
+
+        if (this.currentEditingChart === id) {
+          this.setCurrentEditingChart('');
+          this.toggleSidePanel();
+        }
       } catch {
         // cancelled
       }
