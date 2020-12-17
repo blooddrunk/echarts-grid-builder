@@ -36,6 +36,7 @@
 <script>
 import { GridItem } from 'vue-grid-layout';
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import omit from 'lodash/omit';
 
 import { getDefaultChartOptionsByType } from '@/utils/chart';
 
@@ -134,8 +135,8 @@ export default {
 
     previewConfig() {
       this.setConfigPreviewContent({
-        base: this.chartOptions,
-        full: this.$refs.chart.computedOptions,
+        base: omit(this.chartOptions, ['__series']),
+        full: omit(this.$refs.chart.computedOptions, ['__series']),
       });
       this.showConfigPreviewDialog(true);
     },

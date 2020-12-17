@@ -239,10 +239,13 @@ export const getDefaultSeries = ({ series, dataSource, seriesConfig } = {}) => {
     return this.series({ seriesConfig, dataSource });
   } else {
     const totalDim = getDefaultSeriesLengthByDataSource(dataSource);
-    return Array(totalDim).fill({
+    const presetSeries = {
       ...seriesConfig,
       type: series,
-    });
+    };
+    delete presetSeries.enable;
+
+    return Array(totalDim).fill(presetSeries);
   }
 };
 

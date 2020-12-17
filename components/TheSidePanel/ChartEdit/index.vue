@@ -95,6 +95,13 @@ export default {
     },
   },
 
+  watch: {
+    'currentChartLayout.i'() {
+      this.baseOption = {};
+      this.dataSource = [];
+    },
+  },
+
   methods: {
     ...mapMutations('chart', ['updateChartConfig', 'updateChartData']),
 
