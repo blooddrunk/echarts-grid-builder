@@ -17,7 +17,7 @@
         ref="chart"
         class="tw-w-full tw-h-full"
         autosize
-        theme="primary"
+        :theme="theme"
         :options="chartOptions"
       ></ECharts>
 
@@ -65,7 +65,7 @@ export default {
 
   computed: {
     ...mapState('chart', ['currentEditingChart', 'chartDataMap', 'chartConfigMap']),
-    ...mapState('ui', ['fullscreen']),
+    ...mapState('ui', ['fullscreen', 'theme']),
     ...mapGetters('chart', ['getChartDataById', 'getChartConfigById']),
 
     currentChartId() {

@@ -1,7 +1,10 @@
 import { setState, toggleState } from '@/utils/vuex';
 
 export const state = () => ({
-  theme: '',
+  theme: 'primary',
+  availableThemes: ['primary', 'theme-1', 'theme-2', 'theme-3'],
+  themeList: [],
+
   fullscreen: false,
 
   isSidePanelVisible: false,
@@ -20,6 +23,7 @@ export const getters = {
 
 export const mutations = {
   setTheme: setState('theme'),
+  setThemeList: setState('themeList'),
   toggleFullscreen: toggleState('fullscreen'),
 
   setCurrentBackground: setState('currentBackground'),

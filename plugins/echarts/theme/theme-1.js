@@ -1,10 +1,5 @@
 export default {
   color: [
-    '#3DB7ED',
-    '#0DBFA6',
-    '#FEC263',
-    '#09EBFF',
-    '#FF7F00',
     '#d87c7c',
     '#919e8b',
     '#d7ab82',
@@ -16,7 +11,7 @@ export default {
     '#724e58',
     '#4b565b',
   ],
-  backgroundColor: 'rgba(255,255,255,0)',
+  backgroundColor: 'rgba(254,248,239,1)',
   textStyle: {},
   title: {
     textStyle: {

@@ -11,10 +11,7 @@
         <FontAwesomeIcon icon="chart-area"></FontAwesomeIcon>
       </el-button>
 
-      <el-button type="primary">
-        编辑主题（WIP）
-        <FontAwesomeIcon icon="palette"></FontAwesomeIcon>
-      </el-button>
+      <ThemePicker></ThemePicker>
 
       <el-button type="primary" @click="toggleFullscreenMode">
         全屏
@@ -46,6 +43,8 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
+
+import ThemePicker from './ThemePicker';
 
 export default {
   name: 'Toolbox',

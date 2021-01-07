@@ -121,7 +121,7 @@ export default {
     },
 
     handleDataCommit() {
-      this.updateChartData(this.dataSource);
+      this.updateChartData(cloneDeep(this.dataSource));
     },
 
     handleReset() {

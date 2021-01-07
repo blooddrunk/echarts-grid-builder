@@ -8,11 +8,26 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/title';
 
-import china from 'echarts/map/json/china.json';
-import primary from './theme/primary';
-import secondary from './theme/secondary';
+export default async ({ store }) => {
+  Vue.component('ECharts', ECharts);
 
-Vue.component('ECharts', ECharts);
-ECharts.registerTheme('primary', primary);
-ECharts.registerTheme('secondary', secondary);
-ECharts.registerMap('china', china);
+  const themeList = await Promise.all(
+    store.state.ui.availableThemes.map((theme) =>
+      import(`./theme/${theme}.js`).then((module) => module.default)
+    )
+  );
+
+  const themeConfigList = [];
+  themeList.forEach((theme, index) => {
+    const themeId = store.state.ui.availableThemes[index];
+    ECharts.registerTheme(themeId, theme);
+    themeConfigList.push({
+      id: themeId,
+      config: theme,
+    });
+  });
+
+  store.commit('ui/setThemeList', themeConfigList);
+
+  ECharts.registerMap('china', await import('echarts/map/json/china.json'));
+};
