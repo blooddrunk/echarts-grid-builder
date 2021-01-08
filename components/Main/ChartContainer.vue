@@ -64,9 +64,10 @@ export default {
   }),
 
   computed: {
-    ...mapState('chart', ['currentEditingChart', 'chartDataMap', 'chartConfigMap']),
-    ...mapState('ui', ['fullscreen', 'theme']),
-    ...mapGetters('chart', ['getChartDataById', 'getChartConfigById']),
+    ...mapState('ui', ['fullscreen']),
+    ...mapState('persist/chart', ['currentEditingChart', 'chartDataMap', 'chartConfigMap']),
+    ...mapState('persist/ui', ['theme']),
+    ...mapGetters('persist/chart', ['getChartDataById', 'getChartConfigById']),
 
     currentChartId() {
       return this.layout.i;
@@ -92,7 +93,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('chart', ['updateChartConfigById']),
+    ...mapMutations('persist/chart', ['updateChartConfigById']),
     ...mapMutations('ui', ['showConfigPreviewDialog', 'setConfigPreviewContent']),
 
     startWatching() {

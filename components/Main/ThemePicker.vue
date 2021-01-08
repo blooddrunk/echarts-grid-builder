@@ -31,11 +31,12 @@ export default {
   name: 'ThemePicker',
 
   computed: {
-    ...mapState('ui', ['theme', 'themeList']),
+    ...mapState('persist/ui', ['theme']),
+    ...mapState('ui', ['themeList']),
   },
 
   methods: {
-    ...mapMutations('ui', ['setTheme']),
+    ...mapMutations('persist/ui', ['setTheme']),
 
     handleThemeChange(theme) {
       this.setTheme(theme);

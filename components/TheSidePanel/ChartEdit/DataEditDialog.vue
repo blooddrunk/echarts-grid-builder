@@ -98,8 +98,8 @@ export default {
   }),
 
   computed: {
-    ...mapState('chart', ['currentEditingChart']),
-    ...mapGetters('chart', ['currentChartData']),
+    ...mapState('persist/chart', ['currentEditingChart']),
+    ...mapGetters('persist/chart', ['currentChartData']),
 
     hotSettings() {
       return {

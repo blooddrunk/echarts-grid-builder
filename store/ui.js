@@ -1,7 +1,6 @@
 import { setState, toggleState } from '@/utils/vuex';
 
 export const state = () => ({
-  theme: 'primary',
   availableThemes: ['primary', 'theme-1', 'theme-2', 'theme-3'],
   themeList: [],
 
@@ -11,7 +10,6 @@ export const state = () => ({
   currentSidePanelContent: {},
 
   backgroundList: ['bg-0', 'bg-1'],
-  currentBackground: '',
 
   configPreviewDialogVisible: false,
   configPreviewContent: {},
@@ -22,14 +20,8 @@ export const getters = {
 };
 
 export const mutations = {
-  setTheme: setState('theme'),
   setThemeList: setState('themeList'),
   toggleFullscreen: toggleState('fullscreen'),
-
-  setCurrentBackground: setState('currentBackground'),
-  resetBackground: (state) => {
-    state.currentBackground = '';
-  },
 
   toggleSidePanel: toggleState('isSidePanelVisible'),
   showBgPanel: (state) => {
@@ -69,7 +61,7 @@ export const actions = {
     commit('toggleSidePanel', visible);
     commit('showBgPanel');
     if (visible) {
-      commit('chart/setCurrentEditingChart', '', { root: true });
+      commit('persist/chart/setCurrentEditingChart', '', { root: true });
     }
   },
 
@@ -78,13 +70,13 @@ export const actions = {
     commit('toggleSidePanel', visible);
     commit('showChartGallery');
     if (visible) {
-      commit('chart/setCurrentEditingChart', '', { root: true });
+      commit('persist/chart/setCurrentEditingChart', '', { root: true });
     }
   },
 
   showChartConfig: ({ commit, getters }, payload) => {
     commit('toggleSidePanel', true);
-    commit('chart/setCurrentEditingChart', payload, { root: true });
+    commit('persist/chart/setCurrentEditingChart', payload, { root: true });
     commit('showChartConfig');
   },
 };

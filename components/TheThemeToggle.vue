@@ -19,7 +19,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('ui', ['theme']),
+    ...mapState('ui', ['persist/theme']),
   },
 
   mounted() {

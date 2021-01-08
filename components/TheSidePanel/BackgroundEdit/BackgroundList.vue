@@ -21,7 +21,8 @@ export default {
   name: 'BackgroundList',
 
   computed: {
-    ...mapState('ui', ['currentBackground', 'backgroundList']),
+    ...mapState('ui', ['backgroundList']),
+    ...mapState('persist/ui', ['currentBackground']),
 
     backgroundListWithState() {
       return this.backgroundList.map((fileName) => ({
@@ -32,7 +33,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('ui', ['setCurrentBackground']),
+    ...mapMutations('persist/ui', ['setCurrentBackground']),
 
     getThumbnailStyle(fileName) {
       return {

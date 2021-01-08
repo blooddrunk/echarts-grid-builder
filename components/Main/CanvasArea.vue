@@ -79,8 +79,9 @@ export default {
   },
 
   computed: {
-    ...mapState('ui', ['currentBackground', 'fullscreen']),
-    ...mapGetters('chart', ['gridConfig', 'gridHeight']),
+    ...mapState('persist/ui', ['currentBackground']),
+    ...mapState('ui', ['fullscreen']),
+    ...mapGetters('persist/chart', ['gridConfig', 'gridHeight']),
 
     gridStyle() {
       const height = convertToUnit(this.gridHeight) || '100%';
@@ -154,7 +155,7 @@ export default {
       touch-action: none;
 
       &:not(.vue-grid-placeholder) {
-        @apply tw-border tw-border-medium tw-rounded-lg;
+        @apply tw-border tw-border-medium tw-rounded-lg tw-overflow-hidden;
         @apply tw-shadow-lg;
       }
 

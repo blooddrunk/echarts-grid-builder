@@ -44,7 +44,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 
-import ThemePicker from './ThemePicker';
+// import ThemePicker from './ThemePicker';
 
 export default {
   name: 'Toolbox',

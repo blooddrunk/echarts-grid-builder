@@ -59,8 +59,8 @@ export default {
   }),
 
   computed: {
-    ...mapState('chart', ['canvasLayout', 'currentEditingChart']),
-    ...mapGetters('chart', ['currentChartCount', 'gridConfig']),
+    ...mapState('persist/chart', ['canvasLayout', 'currentEditingChart']),
+    ...mapGetters('persist/chart', ['currentChartCount', 'gridConfig']),
 
     colNum() {
       return this.gridConfig.colNum || 4;
@@ -73,7 +73,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('chart', [
+    ...mapMutations('persist/chart', [
       'addCanvasItem',
       'removeCanvasItemById',
       'setCanvasLayout',

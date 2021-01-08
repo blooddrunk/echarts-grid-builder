@@ -66,7 +66,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('chart', ['currentChartConfig', 'currentChartLayout']),
+    ...mapGetters('persist/chart', ['currentChartConfig', 'currentChartLayout']),
 
     advancedEditComponent() {
       const { pType } = this.currentChartLayout;
@@ -103,7 +103,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('chart', ['updateChartConfig', 'updateChartData']),
+    ...mapMutations('persist/chart', ['updateChartConfig', 'updateChartData']),
 
     handleBaseOptionChange(option) {
       this.baseOption = {

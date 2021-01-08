@@ -103,7 +103,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
 
 import withForm from '@/mixins/withForm';
-import { defaultCanvasConfig } from '@/store/chart';
+import { defaultCanvasConfig } from '@/store/persist/chart';
 import { isNumeric } from '@/utils/math';
 import BackgroundList from './BackgroundList';
 
@@ -122,7 +122,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('chart', ['gridHeight', 'gridConfig']),
+    ...mapGetters('persist/chart', ['gridHeight', 'gridConfig']),
 
     verticalGap() {
       const { margin } = this.gridConfig || {};
@@ -161,8 +161,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations('ui', ['resetBackground']),
-    ...mapMutations('chart', ['setCanvasConfig']),
+    ...mapMutations('persist/ui', ['resetBackground']),
+    ...mapMutations('persist/chart', ['setCanvasConfig']),
 
     caculateRowHeightFromRowNum(rowNum) {
       const verticalSpace = (rowNum + 1) * this.verticalGap;
