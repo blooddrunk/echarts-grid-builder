@@ -79,13 +79,14 @@ export const getters = {
     };
   },
 
-  currentChartLayout: (state, { canvasLayoutMap }) =>
-    canvasLayoutMap[state.currentEditingChart] || {},
+  currentChartLayout: (state, { canvasLayoutMap }, rootState) =>
+    canvasLayoutMap[rootState.chart.currentEditingChart] || {},
 
-  currentChartData: (state) => state.chartDataMap[state.currentEditingChart] || [],
+  currentChartData: (state, getters, rootState) =>
+    state.chartDataMap[rootState.chart.currentEditingChart] || [],
 
-  currentChartConfig: (state, { currentChartData }) => ({
-    ...state.chartConfigMap[state.currentEditingChart],
+  currentChartConfig: (state, { currentChartData }, rootState) => ({
+    ...state.chartConfigMap[rootState.chart.currentEditingChart],
     dataset: {
       source: currentChartData,
     },
@@ -166,3 +167,5 @@ export const mutations = {
     };
   },
 };
+
+export const actions = {};

@@ -128,10 +128,12 @@ export default {
   watch: {
     currentEditingChart: {
       immediate: true,
-      handler() {
-        this.xlsxData = this.currentChartData;
-        if (this.$refs.hotTable) {
-          this.$refs.hotTable.hotInstance.loadData(this.xlsxData);
+      handler(val) {
+        if (val) {
+          this.xlsxData = this.currentChartData;
+          if (this.$refs.hotTable) {
+            this.$refs.hotTable.hotInstance.loadData(this.xlsxData);
+          }
         }
       },
     },

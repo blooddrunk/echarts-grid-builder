@@ -1,4 +1,8 @@
+import { setState } from '@/utils/vuex';
+
 export const state = () => ({
+  currentEditingChart: '',
+
   presetChartList: [
     {
       category: '折线图',
@@ -20,3 +24,7 @@ export const state = () => ({
     },
   ],
 });
+
+export const mutations = {
+  setCurrentEditingChart: setState('currentEditingChart'),
+};
