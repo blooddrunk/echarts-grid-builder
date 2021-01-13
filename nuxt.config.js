@@ -156,6 +156,11 @@ export default {
     background: '#f7fafc',
   },
 
+  server: {
+    port: 3100,
+    host: '0.0.0.0',
+  },
+
   messages: {
     error_404: '404 NOT FOUND',
     back_to_home: '返回首页',
