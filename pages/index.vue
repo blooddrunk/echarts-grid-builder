@@ -29,6 +29,7 @@
 import { nanoid } from 'nanoid';
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
 
 import Toolbox from '@/components/Main/Toolbox';
 import CanvasArea from '@/components/Main/CanvasArea';
@@ -48,6 +49,7 @@ export default {
   },
 
   data: () => ({
+    // use local data, because vue-grid-layout will change layout in place
     localLayout: [],
 
     mousePos: {
@@ -64,6 +66,14 @@ export default {
 
     colNum() {
       return this.gridConfig.colNum || 4;
+    },
+  },
+
+  watch: {
+    canvasLayout(val) {
+      if (!isEqual(this.localLayout, val)) {
+        this.localLayout = cloneDeep(val);
+      }
     },
   },
 
@@ -110,7 +120,7 @@ export default {
 
     async removeGridItem(id) {
       try {
-        await this.$confirm('您确认要删除吗？一旦删除，不可恢复。', '提示', {
+        await this.$confirm('确认要删除吗？一旦删除，不可恢复。', '提示', {
           type: 'warning',
         });
         this.localLayout = this.localLayout.filter((layout) => layout.i !== id);

@@ -40,6 +40,8 @@ import { mapState } from 'vuex';
 export default {
   name: 'ChartGallery',
 
+  inheritAttrs: false,
+
   props: {
     createGridItem: {
       type: Function,
