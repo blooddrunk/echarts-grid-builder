@@ -59,6 +59,8 @@ export default {
     ChartEditFallback,
   },
 
+  inheritAttrs: false,
+
   data: () => ({
     activeTab: 'base',
     baseOption: {},

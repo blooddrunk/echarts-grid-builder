@@ -116,6 +116,8 @@ export default {
 
   mixins: [withForm(defaultCanvasConfig)],
 
+  inheritAttrs: false,
+
   data: () => ({
     activeSectionNames: ['basic', 'background'],
     rowNumEditVisible: false,
