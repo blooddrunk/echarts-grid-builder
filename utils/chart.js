@@ -43,6 +43,15 @@ export const getDimKeyByName = (dimList, name) => {
   return '';
 };
 
+export const getDimLookup = (dimList) => {
+  return dimList.reduce((lookup, dim) => {
+    if (dim && dim.displayName) {
+      lookup[dim.displayName] = dim;
+    }
+    return lookup;
+  }, {});
+};
+
 export const getTooltipFormatter = ({ type = 'normal', ...rest } = {}) => {
   if (type === 'pie') {
     return getPieTooltipFormatter(rest);
@@ -66,16 +75,16 @@ const getTooltipTitle = (param, titleGetter) => {
 
 const getTooltipValue = (
   param,
-  { index, displayEmptyValue = 'N/A', precision = 2, valueGetter }
+  { index, displayEmptyValue = 'N/A', precision = 2, valueFormatter }
 ) => {
   const data = {
     displayEmptyValue,
     precision,
-    valueGetter,
+    valueFormatter,
     ...((param.data && param.data.tooltip) || {}),
   };
 
-  let value = data.valueGetter({ ...param, index });
+  let value = data.valueFormatter({ ...param, index });
   if (isNumeric(value)) {
     value = toDisplayString(value);
   } else if (!value) {

@@ -91,18 +91,23 @@ export default {
     tooltipFormatter() {
       return this.getTooltipFormatter({
         type: this.simpleTooltip ? 'simple' : 'normal',
-        valueGetter: ({ data, seriesName }) => {
+        valueFormatter: ({ data, seriesName }) => {
           const dim = this.dimLookup[seriesName];
           if (!dim) {
             throw new Error(`Unable to find property name for ${seriesName} in data`);
           }
 
           let value = data[dim.name];
-          const percent = dim.percent || this.percent;
-          if (percent === true) {
-            value = toPercentage(value);
-          } else if (percent) {
-            value = toPercentage(value, percent);
+
+          if (typeof dim.valueFormatter === 'function') {
+            value = dim.valueFormatter({ value, data, seriesName, dim });
+          } else {
+            const percent = dim.percent || this.percent;
+            if (percent === true) {
+              value = toPercentage(value);
+            } else if (percent) {
+              value = toPercentage(value, percent);
+            }
           }
 
           return value;

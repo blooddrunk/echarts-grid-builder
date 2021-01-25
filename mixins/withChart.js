@@ -9,7 +9,7 @@ import { addListener, removeListener } from 'resize-detector';
 import ECharts from 'vue-echarts';
 
 import { getDisplayName } from '@/utils/vm';
-import { getTooltipFormatter } from '@/utils/chart';
+import { getTooltipFormatter, getDimLookup } from '@/utils/chart';
 
 const debug = process.env.NODE_ENV === 'development';
 
@@ -108,12 +108,7 @@ export default ({
     },
 
     dimLookup() {
-      return this[dimsField].reduce((lookup, dim) => {
-        if (dim && dim.displayName) {
-          lookup[dim.displayName] = dim;
-        }
-        return lookup;
-      }, {});
+      return getDimLookup(this[dimsField]);
     },
 
     defaultOption() {
@@ -281,7 +276,7 @@ export default ({
       return getTooltipFormatter({
         displayEmptyValue: this.displayEmptyValue,
         precision: this.precision,
-        valueGetter: ({ data, seriesName }) => {
+        valueFormatter: ({ data, seriesName }) => {
           const dimName = this.dimLookup[seriesName] && this.dimLookup[seriesName].name;
           if (!dimName) {
             throw new Error(`Unable to find property name for ${seriesName} in data`);

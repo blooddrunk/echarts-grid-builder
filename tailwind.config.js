@@ -13,14 +13,9 @@ module.exports = {
       },
 
       colors: {
-        gray: colors.coolGray,
-        red: colors.rose,
-        blue: colors.lightBlue,
         cyan: colors.cyan,
-        yellow: colors.amber,
-        green: colors.emerald,
-        purple: colors.violet,
         teal: colors.teal,
+        orange: colors.orange,
 
         inherit: 'inherit',
         primary: 'var(--color-primary)',

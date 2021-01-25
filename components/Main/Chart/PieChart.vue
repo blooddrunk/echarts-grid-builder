@@ -147,7 +147,7 @@ export default {
           formatter: getPieTooltipFormatter({
             type: 'pie',
             showNumber: this.showNumber,
-            valueGetter: ({ data }) => data[this.valueKey],
+            valueFormatter: ({ data }) => data[this.valueKey],
           }),
         },
       });
