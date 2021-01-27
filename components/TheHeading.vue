@@ -5,6 +5,8 @@
         <h1 class="tw-font-semibold tw-text-lg">{{ $config.appName }}</h1>
       </nuxt-link>
 
+      <div class="tw-text-sm">Modern browers only</div>
+
       <!-- <TheThemeToggle></TheThemeToggle> -->
     </div>
   </header>

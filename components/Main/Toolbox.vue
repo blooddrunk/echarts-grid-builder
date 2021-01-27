@@ -18,7 +18,7 @@
         <FontAwesomeIcon icon="expand"></FontAwesomeIcon>
       </el-button>
 
-      <el-dropdown type="primary" @command="handleExport">
+      <!-- <el-dropdown type="primary" @command="handleExport">
         <el-button type="primary">
           导出画布
           <FontAwesomeIcon icon="download"></FontAwesomeIcon>
@@ -36,7 +36,7 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown> -->
     </header>
   </div>
 </template>

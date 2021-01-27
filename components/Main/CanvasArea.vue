@@ -80,8 +80,8 @@ export default {
 
   computed: {
     ...mapState('persist/ui', ['currentBackground']),
-    ...mapState('ui', ['fullscreen']),
     ...mapGetters('persist/chart', ['gridConfig', 'gridHeight']),
+    ...mapState('ui', ['fullscreen']),
 
     gridStyle() {
       const height = convertToUnit(this.gridHeight) || '100%';
@@ -125,7 +125,6 @@ export default {
 
   methods: {
     ...mapMutations('ui', ['toggleFullscreen']),
-    ...mapMutations('chart', ['setCanvasLayout']),
     ...mapActions('ui', ['showChartConfig']),
 
     handleFullscreenChange() {
